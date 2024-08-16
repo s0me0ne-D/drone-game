@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { GameState } from '../interfaces/store_interfaces';
+import { CaveSegment, GameState } from '../interfaces/store_interfaces';
 
 export const useStore = create<GameState>((set) => ({
 	playerName: '',
@@ -20,7 +20,14 @@ export const useStore = create<GameState>((set) => ({
 	setCaveData: (data) => {
 		set((state) => {
 			const newCaveData = [...state.caveData, data];
-			return { caveData: newCaveData };
+			const calculateDroneStartPosition = (caveData: CaveSegment[]) => {
+				if (caveData.length === 1) {
+					const middleX = 250 + (caveData[0].leftWall + caveData[0].rightWall) / 2;
+					return { x: middleX, y: 0 };
+				} else return state.dronePosition;
+			};
+			const startPosition = calculateDroneStartPosition(state.caveData);
+			return { caveData: newCaveData, dronePosition: startPosition };
 		});
 	},
 	setDronePosition: (position) => set({ dronePosition: position }),
