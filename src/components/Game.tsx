@@ -1,9 +1,9 @@
 // src/components/Game.tsx
 import React, { useEffect, useRef, useState } from 'react';
 import { useStore } from '../store/store';
-import { CaveSegment } from '../interfaces/store_interfaces';
 import { Drone } from './Drone';
 import { Cave } from './Cave';
+import { Collision } from './collision/Collision';
 
 const Game: React.FC = () => {
 	const playerId = useStore((state) => state.playerId);
@@ -16,6 +16,10 @@ const Game: React.FC = () => {
 	const setScore = useStore((state) => state.setScore);
 
 	const wsRef = useRef<WebSocket | null>(null);
+
+	const [isLoading, setIsLoading] = useState<boolean>(true);
+
+	console.log('render');
 
 	useEffect(() => {
 		if (gameStatus === 'playing' && playerId && token) {
@@ -33,6 +37,7 @@ const Game: React.FC = () => {
 			};
 
 			wsRef.current.onclose = () => {
+				setIsLoading(false);
 				console.log('WebSocket connection closed');
 			};
 			return () => {
@@ -63,10 +68,17 @@ const Game: React.FC = () => {
 
 	return (
 		<div>
-			<svg width='500' height='500' style={{ backgroundColor: 'white', border: '1px solid black' }}>
-				<Drone />
-				<Cave />
-			</svg>
+			{isLoading ? null : (
+				<svg
+					width='500'
+					height='500'
+					style={{ backgroundColor: 'white', border: '1px solid black' }}
+				>
+					<Drone />
+					<Cave />
+					<Collision />
+				</svg>
+			)}
 
 			<div>
 				<h2>Score: {score}</h2>

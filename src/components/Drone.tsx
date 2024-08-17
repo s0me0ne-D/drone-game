@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DronePosition } from '../interfaces/store_interfaces';
 import { useStore } from '../store/store';
 
@@ -23,7 +23,7 @@ export const Drone = () => {
 	}, [droneSpeed, caveData, dronePosition]);
 	return (
 		<polygon
-			points={`${dronePosition.x - 7.5},${0} ${dronePosition.x + 7.5},${0} ${
+			points={`${dronePosition.x - 15 / 2},${0} ${dronePosition.x + 15 / 2},${0} ${
 				dronePosition.x
 			},${15}`}
 			fill='blue'
