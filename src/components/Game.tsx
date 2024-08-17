@@ -1,4 +1,3 @@
-// src/components/Game.tsx
 import React, { useEffect, useRef, useState } from 'react';
 import { useStore } from '../store/store';
 import { Drone } from './Drone';
@@ -6,15 +5,13 @@ import { Cave } from './Cave';
 import { GameStatus } from './collision/GameStatus';
 import { Score } from './Score';
 import { Speedometres } from './Speedometres/Speedometres';
+import { RotatingLines } from 'react-loader-spinner';
 
 export const Game = () => {
 	const playerId = useStore((state) => state.playerId);
 	const token = useStore((state) => state.token);
 	const setCaveData = useStore((state) => state.setCaveData);
 	const gameStatus = useStore((state) => state.gameStatus);
-	const setGameStatus = useStore((state) => state.setGameStatus);
-	const score = useStore((state) => state.score);
-	const setScore = useStore((state) => state.setScore);
 
 	const wsRef = useRef<WebSocket | null>(null);
 
@@ -43,25 +40,36 @@ export const Game = () => {
 				wsRef.current?.close();
 			};
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [gameStatus, playerId, token]);
 
 	return (
 		<div className='game'>
-			{isLoading ? null : (
-				<svg
-					width='500'
-					height='500'
-					style={{ backgroundColor: 'white', border: '1px solid black' }}
-				>
-					<Drone />
-					<Cave />
-					<GameStatus />
-				</svg>
+			{isLoading ? (
+				<RotatingLines
+					strokeColor='grey'
+					strokeWidth='5'
+					animationDuration='0.75'
+					width='96'
+					visible={true}
+				/>
+			) : (
+				<>
+					<svg
+						width='500'
+						height='500'
+						style={{ backgroundColor: 'white', border: '1px solid black' }}
+					>
+						<Drone />
+						<Cave />
+						<GameStatus />
+					</svg>
+					<div className='game-values'>
+						<Score />
+						<Speedometres />
+					</div>
+				</>
 			)}
-			<div className='game-values'>
-				<Score />
-				<Speedometres />
-			</div>
 		</div>
 	);
 };

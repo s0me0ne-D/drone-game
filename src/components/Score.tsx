@@ -8,8 +8,9 @@ export const Score = () => {
 	const setScore = useStore((store) => store.setScore);
 
 	useEffect(() => {
-		if (dronePositionY % 50 === 0 && dronePositionY !== 0) {
-			setScore(complexity);
+		const scoreMultiplier = 20 - complexity;
+		if (dronePositionY % scoreMultiplier === 0 && dronePositionY !== 0) {
+			setScore(1);
 		}
 	}, [dronePositionY]);
 
