@@ -9,6 +9,7 @@ export const Drone = () => {
 	const setDroneSpeed = useStore((state) => state.setDroneSpeed);
 
 	const setDronePosition = useStore((state) => state.setDronePosition);
+	console.log(droneSpeed.y);
 
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
@@ -22,7 +23,11 @@ export const Drone = () => {
 					return { ...prevSpeed, y: newVerticalSpeed };
 				});
 			} else if (e.key === 'ArrowDown') {
-				setDroneSpeed((prevSpeed) => ({ ...prevSpeed, y: prevSpeed.y - 1 }));
+				setDroneSpeed((prevSpeed) => {
+					const speedLimit = 10;
+					const newVerticalSpeed = prevSpeed.y > -speedLimit ? prevSpeed.y - 1 : prevSpeed.y;
+					return { ...prevSpeed, y: newVerticalSpeed };
+				});
 			}
 		};
 

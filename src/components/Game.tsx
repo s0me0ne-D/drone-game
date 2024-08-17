@@ -3,7 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useStore } from '../store/store';
 import { Drone } from './Drone';
 import { Cave } from './Cave';
-import { Collision } from './collision/GameStatus';
+import { GameStatus } from './collision/GameStatus';
+import { Score } from './Score';
 
 const Game: React.FC = () => {
 	const playerId = useStore((state) => state.playerId);
@@ -53,12 +54,12 @@ const Game: React.FC = () => {
 				>
 					<Drone />
 					<Cave />
-					<Collision />
+					<GameStatus />
 				</svg>
 			)}
 
 			<div>
-				<h2>Score: {score}</h2>
+				<Score />
 			</div>
 		</div>
 	);

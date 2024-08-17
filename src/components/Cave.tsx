@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useStore } from '../store/store';
 
 export const Cave = () => {

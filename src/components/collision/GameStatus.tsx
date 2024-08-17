@@ -13,7 +13,7 @@ export interface WallCoordinates {
 
 const droneWidth = 15;
 
-export const Collision = () => {
+export const GameStatus = () => {
 	const caveData = useStore((state) => state.caveData);
 
 	const [droneWallsCoordinates, setDroneWallsCoordinates] = useState<WallsCoordinates>({

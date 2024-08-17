@@ -12,6 +12,7 @@ export const useStore = create<GameState>((set) => ({
 	gameStatus: 'idle',
 	score: 0,
 	gameSessions: JSON.parse(localStorage.getItem('gameSessions') || '[]'),
+	caveWallsCoordinates: { leftWall: [], rightWall: [] },
 
 	setPlayerName: (name) => set({ playerName: name }),
 	setComplexity: (level) => set({ complexity: level }),
@@ -37,7 +38,7 @@ export const useStore = create<GameState>((set) => ({
 			return { droneSpeed: updatedSpeed };
 		}),
 	setGameStatus: (status) => set({ gameStatus: status }),
-	setScore: (score) => set({ score: score }),
+	setScore: (score) => set((store) => ({ score: store.score + score })),
 	addGameSession: (session) => {
 		set((state) => {
 			const updatedSessions = [...state.gameSessions, session];
