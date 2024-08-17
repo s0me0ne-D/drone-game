@@ -14,8 +14,8 @@ export const Score = () => {
 	}, [dronePositionY]);
 
 	return (
-		<div>
-			<h2>Score:</h2> {score}
+		<div className='score'>
+			<h2>Score:</h2> <span>{score}</span>
 		</div>
 	);
 };

@@ -5,8 +5,9 @@ import { Drone } from './Drone';
 import { Cave } from './Cave';
 import { GameStatus } from './collision/GameStatus';
 import { Score } from './Score';
+import { Speedometres } from './Speedometres/Speedometres';
 
-const Game: React.FC = () => {
+export const Game = () => {
 	const playerId = useStore((state) => state.playerId);
 	const token = useStore((state) => state.token);
 	const setCaveData = useStore((state) => state.setCaveData);
@@ -45,7 +46,7 @@ const Game: React.FC = () => {
 	}, [gameStatus, playerId, token]);
 
 	return (
-		<div>
+		<div className='game'>
 			{isLoading ? null : (
 				<svg
 					width='500'
@@ -57,12 +58,10 @@ const Game: React.FC = () => {
 					<GameStatus />
 				</svg>
 			)}
-
-			<div>
+			<div className='game-values'>
 				<Score />
+				<Speedometres />
 			</div>
 		</div>
 	);
 };
-
-export default Game;

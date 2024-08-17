@@ -9,14 +9,21 @@ export const Drone = () => {
 	const setDroneSpeed = useStore((state) => state.setDroneSpeed);
 
 	const setDronePosition = useStore((state) => state.setDronePosition);
-	console.log(droneSpeed.y);
+	console.log(droneSpeed.x);
 
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
+			const speedLimit = 10;
 			if (e.key === 'ArrowLeft') {
-				setDroneSpeed((prevSpeed) => ({ ...prevSpeed, x: prevSpeed.x - 1 }));
+				setDroneSpeed((prevSpeed) => {
+					const newHorizontalSpeed = prevSpeed.x > -speedLimit ? prevSpeed.x - 1 : prevSpeed.x;
+					return { ...prevSpeed, x: newHorizontalSpeed };
+				});
 			} else if (e.key === 'ArrowRight') {
-				setDroneSpeed((prevSpeed) => ({ ...prevSpeed, x: prevSpeed.x + 1 }));
+				setDroneSpeed((prevSpeed) => {
+					const newHorizontalSpeed = prevSpeed.x < speedLimit ? prevSpeed.x + 1 : prevSpeed.x;
+					return { ...prevSpeed, x: newHorizontalSpeed };
+				});
 			} else if (e.key === 'ArrowUp') {
 				setDroneSpeed((prevSpeed) => {
 					const newVerticalSpeed = prevSpeed.y < 0 ? prevSpeed.y + 1 : 0;
@@ -24,7 +31,6 @@ export const Drone = () => {
 				});
 			} else if (e.key === 'ArrowDown') {
 				setDroneSpeed((prevSpeed) => {
-					const speedLimit = 10;
 					const newVerticalSpeed = prevSpeed.y > -speedLimit ? prevSpeed.y - 1 : prevSpeed.y;
 					return { ...prevSpeed, y: newVerticalSpeed };
 				});
