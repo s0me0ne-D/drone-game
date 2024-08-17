@@ -3,13 +3,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useStore } from '../store/store';
 import { Drone } from './Drone';
 import { Cave } from './Cave';
-import { Collision } from './collision/Collision';
+import { Collision } from './collision/GameStatus';
 
 const Game: React.FC = () => {
 	const playerId = useStore((state) => state.playerId);
 	const token = useStore((state) => state.token);
 	const setCaveData = useStore((state) => state.setCaveData);
-	const setDroneSpeed = useStore((state) => state.setDroneSpeed);
 	const gameStatus = useStore((state) => state.gameStatus);
 	const setGameStatus = useStore((state) => state.setGameStatus);
 	const score = useStore((state) => state.score);
@@ -18,8 +17,6 @@ const Game: React.FC = () => {
 	const wsRef = useRef<WebSocket | null>(null);
 
 	const [isLoading, setIsLoading] = useState<boolean>(true);
-
-	console.log('render');
 
 	useEffect(() => {
 		if (gameStatus === 'playing' && playerId && token) {
@@ -45,26 +42,6 @@ const Game: React.FC = () => {
 			};
 		}
 	}, [gameStatus, playerId, token]);
-
-	useEffect(() => {
-		const handleKeyDown = (e: KeyboardEvent) => {
-			if (e.key === 'ArrowLeft') {
-				setDroneSpeed((prevSpeed) => ({ ...prevSpeed, x: prevSpeed.x - 1 }));
-			} else if (e.key === 'ArrowRight') {
-				setDroneSpeed((prevSpeed) => ({ ...prevSpeed, x: prevSpeed.x + 1 }));
-			} else if (e.key === 'ArrowUp') {
-				setDroneSpeed((prevSpeed) => ({ ...prevSpeed, y: prevSpeed.y + 1 }));
-			} else if (e.key === 'ArrowDown') {
-				setDroneSpeed((prevSpeed) => ({ ...prevSpeed, y: prevSpeed.y - 1 }));
-			}
-		};
-
-		window.addEventListener('keyup', handleKeyDown);
-
-		return () => {
-			window.removeEventListener('keyup', handleKeyDown);
-		};
-	}, []);
 
 	return (
 		<div>

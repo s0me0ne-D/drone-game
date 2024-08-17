@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useStore } from '../../store/store';
-import { CheckColission } from './CheckCollision';
+import { CheckGameStatus } from './CheckGameStatus';
 
 export interface WallsCoordinates {
 	leftWall: WallCoordinates[];
@@ -82,10 +82,9 @@ export const Collision = () => {
 			}));
 		}
 	}, []);
-
 	if ((caveData.length, Math.ceil(caveWallsCoordinates.leftWall.length / 10))) {
 		return (
-			<CheckColission
+			<CheckGameStatus
 				caveWallsCoordinates={caveWallsCoordinates}
 				droneWallsCoordinates={droneWallsCoordinates}
 			/>

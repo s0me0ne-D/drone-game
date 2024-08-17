@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { WallsCoordinates } from './Collision';
+import React, { useEffect } from 'react';
+import { WallsCoordinates } from './GameStatus';
 import { useStore } from '../../store/store';
 
 interface CheckColissionProps {
@@ -7,14 +7,14 @@ interface CheckColissionProps {
 	caveWallsCoordinates: WallsCoordinates;
 }
 
-export const CheckColission = ({
+export const CheckGameStatus = ({
 	droneWallsCoordinates,
 	caveWallsCoordinates,
 }: CheckColissionProps) => {
 	const dronePosition = useStore((store) => store.dronePosition);
 	const setGameStatus = useStore((store) => store.setGameStatus);
 	useEffect(() => {
-		if (droneWallsCoordinates.leftWall.length > 15)
+		const checkCollision = () => {
 			for (let i = 0; i <= 15; i++) {
 				const indexOfWallSection = -dronePosition.y + i;
 				const leftDroneCoordinates = dronePosition.x - droneWallsCoordinates.leftWall[i].x;
@@ -27,7 +27,15 @@ export const CheckColission = ({
 					setGameStatus('lost');
 				}
 			}
-	}, [dronePosition]);
+		};
 
+		const checkIsWin = () => {
+			if (-dronePosition.y === caveWallsCoordinates.leftWall.length + 10) {
+				setGameStatus('won');
+			}
+		};
+		checkCollision();
+		checkIsWin();
+	}, [dronePosition]);
 	return null;
 };
