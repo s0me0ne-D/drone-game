@@ -7,7 +7,7 @@ interface CheckColissionProps {
 	caveWallsCoordinates: WallsCoordinates;
 }
 
-const droneSize = 15;
+const droneSize = 10;
 
 export const CheckGameStatus = ({
 	droneWallsCoordinates,
@@ -15,6 +15,7 @@ export const CheckGameStatus = ({
 }: CheckColissionProps) => {
 	const dronePosition = useStore((store) => store.dronePosition);
 	const setGameStatus = useStore((store) => store.setGameStatus);
+
 	useEffect(() => {
 		const checkCollision = () => {
 			for (let i = 0; i <= droneSize; i++) {

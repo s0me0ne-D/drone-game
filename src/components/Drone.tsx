@@ -66,9 +66,9 @@ export const Drone = () => {
 	}, [droneSpeed, caveData, dronePosition]);
 	return (
 		<polygon
-			points={`${dronePosition.x - 15 / 2},${0} ${dronePosition.x + 15 / 2},${0} ${
+			points={`${dronePosition.x - 10 / 2},${0} ${dronePosition.x + 10 / 2},${0} ${
 				dronePosition.x
-			},${15}`}
+			},${10}`}
 			fill='blue'
 		/>
 	);

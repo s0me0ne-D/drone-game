@@ -12,7 +12,7 @@ export const PopUp = () => {
 		gameStatus === 'lost' ? lostMessage : gameStatus === 'won' ? wonMessage : null;
 
 	const handleOnClick = () => {
-		gameStatus === 'won' && saveGameSession();
+		saveGameSession();
 		startNewGame();
 	};
 

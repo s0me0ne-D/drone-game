@@ -11,7 +11,7 @@ export interface WallCoordinates {
 	y: number;
 }
 
-const droneWidth = 15;
+const droneWidth = 10;
 
 export const GameStatus = () => {
 	const caveData = useStore((state) => state.caveData);
@@ -83,7 +83,6 @@ export const GameStatus = () => {
 			setDroneWallsCoordinates((prev) => [...prev, { x: droneWidth / 2 - i * step, y: i }]);
 		}
 	}, []);
-
 	if ((caveData.length, Math.ceil(caveWallsCoordinates.leftWall.length / 10))) {
 		return (
 			<CheckGameStatus
