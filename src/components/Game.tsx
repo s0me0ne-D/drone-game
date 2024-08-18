@@ -37,6 +37,7 @@ export const Game = () => {
 			wsRef.current.onclose = () => {
 				setIsLoading(false);
 			};
+
 			return () => {
 				wsRef.current?.close();
 			};

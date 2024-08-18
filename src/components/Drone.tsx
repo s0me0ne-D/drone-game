@@ -22,28 +22,36 @@ export const Drone = () => {
 	useEffect(() => {
 		if (gameStatus === 'playing') {
 			const handleKeyDown = (e: KeyboardEvent) => {
-				if (e.key === 'ArrowLeft') {
-					setDroneSpeed((prevSpeed) => {
-						const newHorizontalSpeed =
-							prevSpeed.x > -MAX_SPEED_LIMIT ? prevSpeed.x - 1 : prevSpeed.x;
-						return { ...prevSpeed, x: newHorizontalSpeed };
-					});
-				} else if (e.key === 'ArrowRight') {
-					setDroneSpeed((prevSpeed) => {
-						const newHorizontalSpeed =
-							prevSpeed.x < MAX_SPEED_LIMIT ? prevSpeed.x + 1 : prevSpeed.x;
-						return { ...prevSpeed, x: newHorizontalSpeed };
-					});
-				} else if (e.key === 'ArrowUp') {
-					setDroneSpeed((prevSpeed) => {
-						const newVerticalSpeed = prevSpeed.y < 0 ? prevSpeed.y + 1 : 0;
-						return { ...prevSpeed, y: newVerticalSpeed };
-					});
-				} else if (e.key === 'ArrowDown') {
-					setDroneSpeed((prevSpeed) => {
-						const newVerticalSpeed = prevSpeed.y > -MAX_SPEED_LIMIT ? prevSpeed.y - 1 : prevSpeed.y;
-						return { ...prevSpeed, y: newVerticalSpeed };
-					});
+				switch (e.key) {
+					case 'ArrowLeft':
+						setDroneSpeed((prevSpeed) => {
+							const newHorizontalSpeed =
+								prevSpeed.x > -MAX_SPEED_LIMIT ? prevSpeed.x - 1 : prevSpeed.x;
+							return { ...prevSpeed, x: newHorizontalSpeed };
+						});
+						break;
+					case 'ArrowRight':
+						setDroneSpeed((prevSpeed) => {
+							const newHorizontalSpeed =
+								prevSpeed.x < MAX_SPEED_LIMIT ? prevSpeed.x + 1 : prevSpeed.x;
+							return { ...prevSpeed, x: newHorizontalSpeed };
+						});
+						break;
+					case 'ArrowUp':
+						setDroneSpeed((prevSpeed) => {
+							const newVerticalSpeed = prevSpeed.y < 0 ? prevSpeed.y + 1 : 0;
+							return { ...prevSpeed, y: newVerticalSpeed };
+						});
+						break;
+					case 'ArrowDown':
+						setDroneSpeed((prevSpeed) => {
+							const newVerticalSpeed =
+								prevSpeed.y > -MAX_SPEED_LIMIT ? prevSpeed.y - 1 : prevSpeed.y;
+							return { ...prevSpeed, y: newVerticalSpeed };
+						});
+						break;
+					default:
+						break;
 				}
 			};
 
@@ -66,8 +74,10 @@ export const Drone = () => {
 						x: dronePosition.x + droneSpeed.x,
 						y: dronePosition.y + droneSpeed.y,
 					};
+
 					setDronePosition(newPosition);
 				}, 100);
+
 				return () => clearInterval(interval);
 			}
 		}

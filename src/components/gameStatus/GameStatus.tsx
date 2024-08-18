@@ -52,10 +52,9 @@ export const GameStatus = () => {
 						(MAP_MIDDLE + caveLeftStepStart + caveLeftStep * k).toFixed(1)
 					);
 					const rightWallCoordinateX = MAP_MIDDLE + caveRightStepStart + caveRightStep * k;
-
 					const wallCoordinateY = i * CAVE_SECTION_HEIGHT + (k - CAVE_SECTION_HEIGHT);
 
-					return {
+					const sectionCoordinates = {
 						leftWall: [
 							...prev.leftWall,
 							{
@@ -65,6 +64,8 @@ export const GameStatus = () => {
 						],
 						rightWall: [...prev.rightWall, { x: rightWallCoordinateX, y: wallCoordinateY }],
 					};
+
+					return sectionCoordinates;
 				};
 
 				setCaveWallsCoordinates((prev) => addSectionCoordinates(prev));
@@ -74,6 +75,7 @@ export const GameStatus = () => {
 	const setDroneCoordinates = () => {
 		for (let i = 0; i <= DRONE_SIZE; i++) {
 			const step = DRONE_SIZE / DRONE_SIZE / 2;
+
 			setDroneWallsCoordinates((prev) => [...prev, { x: DRONE_SIZE / 2 - i * step, y: i }]);
 		}
 	};
