@@ -40,5 +40,5 @@ export interface GameState {
 	setDroneSpeed: (speed: DroneSpeed | ((prevSpeed: DroneSpeed) => DroneSpeed)) => void;
 	setGameStatus: (status: 'idle' | 'playing' | 'won' | 'lost') => void;
 	setScore: (score: number) => void;
-	addGameSession: (session: GameSession) => void;
+	saveGameSession: () => void;
 }

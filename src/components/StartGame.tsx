@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { useStore } from '../store/store';
 import { fetchToken, initGame } from '../api/api';
+import { Scoreboard } from './Scoreboard';
 
 export const StartGame = () => {
 	const setPlayerName = useStore((state) => state.setPlayerName);
@@ -14,7 +15,10 @@ export const StartGame = () => {
 
 	const [isError, setIsError] = useState<boolean>(false);
 
-	const handleStartGame = async () => {
+	const handleOnSubmit = async (
+		event: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent<HTMLFormElement>
+	) => {
+		event.preventDefault();
 		if (name.length === 0) {
 			setIsError(true);
 		} else {
@@ -35,37 +39,40 @@ export const StartGame = () => {
 
 	return (
 		<div className='start-game'>
-			<h1>Drone Game</h1>
-			<div>
-				<input
-					className={`name ${isError ? 'error-value' : ''}`}
-					type='text'
-					placeholder='Enter your name'
-					value={name}
-					onChange={(e) => {
-						e.target.value.length !== 0 && setIsError(false);
-						setName(e.target.value);
-					}}
-				/>
-				<input
-					className='level'
-					type='number'
-					min='0'
-					max='10'
-					placeholder='Difficulty Level'
-					value={complexity}
-					onChange={(e) => {
-						if (+e.target.value < 0 || +e.target.value > 10) {
-							return;
-						} else {
-							setComplexityLevel(+e.target.value);
-						}
-					}}
-				/>
-			</div>
-			<button className='start-button' onClick={handleStartGame}>
-				Start Game
-			</button>
+			<form onSubmit={handleOnSubmit}>
+				<h1>Drone Game</h1>
+				<div className='values'>
+					<input
+						className={`name ${isError ? 'error-value' : ''}`}
+						type='text'
+						placeholder='Enter your name'
+						value={name}
+						onChange={(e) => {
+							e.target.value.length !== 0 && setIsError(false);
+							setName(e.target.value);
+						}}
+					/>
+					<input
+						className='level'
+						type='number'
+						min='0'
+						max='10'
+						placeholder='Difficulty Level'
+						value={complexity}
+						onChange={(e) => {
+							if (+e.target.value < 0 || +e.target.value > 10) {
+								return;
+							} else {
+								setComplexityLevel(+e.target.value);
+							}
+						}}
+					/>
+				</div>
+				<button className='start-button' onClick={handleOnSubmit} type='submit'>
+					Start Game
+				</button>
+			</form>
+			<Scoreboard />
 		</div>
 	);
 };

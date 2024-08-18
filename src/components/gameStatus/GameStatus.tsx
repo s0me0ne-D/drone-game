@@ -71,6 +71,7 @@ export const GameStatus = () => {
 				}));
 			}
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	useEffect(() => {
 		setDroneWallsCoordinates({ leftWall: [], rightWall: [] });

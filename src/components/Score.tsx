@@ -12,6 +12,7 @@ export const Score = () => {
 		if (dronePositionY % scoreMultiplier === 0 && dronePositionY !== 0) {
 			setScore(1);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dronePositionY]);
 
 	return (

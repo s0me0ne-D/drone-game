@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useStore } from '../store/store';
 import { Drone } from './Drone';
 import { Cave } from './Cave';
-import { GameStatus } from './collision/GameStatus';
+import { GameStatus } from './gameStatus/GameStatus';
 import { Score } from './Score';
 import { Speedometres } from './Speedometres/Speedometres';
 import { RotatingLines } from 'react-loader-spinner';

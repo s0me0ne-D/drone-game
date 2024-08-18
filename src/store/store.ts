@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { CaveSegment, GameState } from '../interfaces/store_interfaces';
+import { CaveSegment, GameSession, GameState } from '../interfaces/store_interfaces';
 
 export const useStore = create<GameState>((set) => ({
 	playerName: '',
@@ -39,11 +39,15 @@ export const useStore = create<GameState>((set) => ({
 		}),
 	setGameStatus: (status) => set({ gameStatus: status }),
 	setScore: (score) => set((store) => ({ score: store.score + score })),
-	addGameSession: (session) => {
+	saveGameSession: () => {
 		set((state) => {
-			const updatedSessions = [...state.gameSessions, session];
-			localStorage.setItem('gameSessions', JSON.stringify(updatedSessions));
-			return { gameSessions: updatedSessions };
+			const updatedSessions: GameSession[] = [
+				...state.gameSessions,
+				{ playerName: state.playerName, complexity: state.complexity, score: state.score },
+			];
+			const sortedUpdatedSession = updatedSessions.sort((a, b) => b.score - a.score);
+			localStorage.setItem('gameSessions', JSON.stringify(sortedUpdatedSession));
+			return { gameSessions: sortedUpdatedSession };
 		});
 	},
 }));

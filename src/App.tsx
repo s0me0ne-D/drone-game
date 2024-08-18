@@ -6,12 +6,7 @@ import { useStore } from './store/store';
 function App() {
 	const gameStatus = useStore((state) => state.gameStatus);
 
-	return (
-		<div id='App'>
-			{gameStatus === 'idle' && <StartGame />}
-			{gameStatus === 'playing' && <Game />}
-		</div>
-	);
+	return <div id='App'>{gameStatus === 'idle' ? <StartGame /> : <Game />}</div>;
 }
 
 export default App;
