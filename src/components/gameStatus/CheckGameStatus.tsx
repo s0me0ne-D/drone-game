@@ -15,7 +15,6 @@ export const CheckGameStatus = ({
 }: CheckColissionProps) => {
 	const dronePosition = useStore((store) => store.dronePosition);
 	const setGameStatus = useStore((store) => store.setGameStatus);
-	const saveGameSession = useStore((store) => store.saveGameSession);
 	useEffect(() => {
 		const checkCollision = () => {
 			for (let i = 0; i <= droneSize; i++) {
@@ -34,10 +33,8 @@ export const CheckGameStatus = ({
 		};
 
 		const checkIsWin = () => {
-			console.log(-dronePosition.y, caveWallsCoordinates.leftWall.length);
 			if (-dronePosition.y >= caveWallsCoordinates.leftWall.length) {
 				setGameStatus('won');
-				saveGameSession();
 			}
 		};
 

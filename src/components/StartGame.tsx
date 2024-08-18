@@ -68,7 +68,7 @@ export const StartGame = () => {
 						}}
 					/>
 				</div>
-				<button className='start-button' onClick={handleOnSubmit} type='submit'>
+				<button className='button' onClick={handleOnSubmit} type='submit'>
 					Start Game
 				</button>
 			</form>

@@ -12,7 +12,6 @@ export const useStore = create<GameState>((set) => ({
 	gameStatus: 'idle',
 	score: 0,
 	gameSessions: JSON.parse(localStorage.getItem('gameSessions') || '[]'),
-	caveWallsCoordinates: { leftWall: [], rightWall: [] },
 
 	setPlayerName: (name) => set({ playerName: name }),
 	setComplexity: (level) => set({ complexity: level }),
@@ -46,8 +45,22 @@ export const useStore = create<GameState>((set) => ({
 				{ playerName: state.playerName, complexity: state.complexity, score: state.score },
 			];
 			const sortedUpdatedSession = updatedSessions.sort((a, b) => b.score - a.score);
+			console.log(sortedUpdatedSession);
 			localStorage.setItem('gameSessions', JSON.stringify(sortedUpdatedSession));
 			return { gameSessions: sortedUpdatedSession };
+		});
+	},
+	startNewGame: () => {
+		set({
+			playerName: '',
+			complexity: 0,
+			playerId: '',
+			token: '',
+			caveData: [],
+			dronePosition: { x: 0, y: 0 },
+			droneSpeed: { x: 0, y: 0 },
+			gameStatus: 'idle',
+			score: 0,
 		});
 	},
 }));

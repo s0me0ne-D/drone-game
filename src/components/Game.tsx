@@ -6,6 +6,7 @@ import { GameStatus } from './gameStatus/GameStatus';
 import { Score } from './Score';
 import { Speedometres } from './Speedometres/Speedometres';
 import { RotatingLines } from 'react-loader-spinner';
+import { PopUp } from './PopUp';
 
 export const Game = () => {
 	const playerId = useStore((state) => state.playerId);
@@ -70,6 +71,7 @@ export const Game = () => {
 					</div>
 				</>
 			)}
+			{(gameStatus === 'lost' || gameStatus === 'won') && <PopUp />}
 		</div>
 	);
 };

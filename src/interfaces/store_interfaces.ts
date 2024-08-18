@@ -41,4 +41,5 @@ export interface GameState {
 	setGameStatus: (status: 'idle' | 'playing' | 'won' | 'lost') => void;
 	setScore: (score: number) => void;
 	saveGameSession: () => void;
+	startNewGame: () => void;
 }
