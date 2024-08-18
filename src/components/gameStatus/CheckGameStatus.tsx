@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { WallsCoordinates } from './GameStatus';
+import { WallCoordinates, WallsCoordinates } from './GameStatus';
 import { useStore } from '../../store/store';
 
 interface CheckColissionProps {
-	droneWallsCoordinates: WallsCoordinates;
+	droneWallsCoordinates: WallCoordinates[];
 	caveWallsCoordinates: WallsCoordinates;
 }
 
@@ -19,8 +19,8 @@ export const CheckGameStatus = ({
 		const checkCollision = () => {
 			for (let i = 0; i <= droneSize; i++) {
 				const indexOfWallSection = -dronePosition.y + i;
-				const leftDroneCoordinates = dronePosition.x - droneWallsCoordinates.leftWall[i].x;
-				const rightDroneCoordinates = dronePosition.x + droneWallsCoordinates.leftWall[i].x;
+				const leftDroneCoordinates = dronePosition.x - droneWallsCoordinates[i].x;
+				const rightDroneCoordinates = dronePosition.x + droneWallsCoordinates[i].x;
 				if (caveWallsCoordinates.leftWall[indexOfWallSection]) {
 					if (
 						leftDroneCoordinates <= caveWallsCoordinates.leftWall[indexOfWallSection].x ||

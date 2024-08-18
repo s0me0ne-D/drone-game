@@ -16,10 +16,7 @@ const droneWidth = 15;
 export const GameStatus = () => {
 	const caveData = useStore((state) => state.caveData);
 
-	const [droneWallsCoordinates, setDroneWallsCoordinates] = useState<WallsCoordinates>({
-		leftWall: [],
-		rightWall: [],
-	});
+	const [droneWallsCoordinates, setDroneWallsCoordinates] = useState<WallCoordinates[]>([]);
 
 	const [caveWallsCoordinates, setCaveWallsCoordinates] = useState<WallsCoordinates>({
 		leftWall: [],
@@ -56,33 +53,38 @@ export const GameStatus = () => {
 			const caveRightStep = (caveRightStepEnd - caveRightStepStart) / 10;
 
 			for (let k = 0; k < 10; k++) {
-				setCaveWallsCoordinates((prev) => ({
-					leftWall: [
-						...prev.leftWall,
-						{
-							x: Number((250 + caveLeftStepStart + caveLeftStep * k).toFixed(1)),
-							y: i * 10 + (k - 10),
-						},
-					],
-					rightWall: [
-						...prev.rightWall,
-						{ x: 250 + caveRightStepStart + caveRightStep * k, y: i * 10 + (k - 10) },
-					],
-				}));
+				setCaveWallsCoordinates((prev) => {
+					const leftWallCoordinateX = Number(
+						(250 + caveLeftStepStart + caveLeftStep * k).toFixed(1)
+					);
+					const rightWallCoordinateX = 250 + caveRightStepStart + caveRightStep * k;
+
+					const wallCoordinateY = i * 10 + (k - 10);
+
+					return {
+						leftWall: [
+							...prev.leftWall,
+							{
+								x: leftWallCoordinateX,
+								y: wallCoordinateY,
+							},
+						],
+						rightWall: [...prev.rightWall, { x: rightWallCoordinateX, y: wallCoordinateY }],
+					};
+				});
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	useEffect(() => {
-		setDroneWallsCoordinates({ leftWall: [], rightWall: [] });
+		setDroneWallsCoordinates([]);
 		for (let i = 0; i <= droneWidth; i++) {
 			const step = droneWidth / droneWidth / 2;
-			setDroneWallsCoordinates((prev) => ({
-				leftWall: [...prev.leftWall, { x: droneWidth / 2 - i * step, y: i }],
-				rightWall: [...prev.rightWall, { x: droneWidth / 2 - i * step, y: i }],
-			}));
+			setDroneWallsCoordinates((prev) => [...prev, { x: droneWidth / 2 - i * step, y: i }]);
 		}
 	}, []);
+
+	console.log(droneWallsCoordinates);
 	if ((caveData.length, Math.ceil(caveWallsCoordinates.leftWall.length / 10))) {
 		return (
 			<CheckGameStatus
