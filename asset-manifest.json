@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/drone-game/static/css/main.d63f8e89.css",
-    "main.js": "/drone-game/static/js/main.0e39cd89.js",
+    "main.js": "/drone-game/static/js/main.f4b862ef.js",
     "index.html": "/drone-game/index.html",
     "main.d63f8e89.css.map": "/drone-game/static/css/main.d63f8e89.css.map",
-    "main.0e39cd89.js.map": "/drone-game/static/js/main.0e39cd89.js.map"
+    "main.f4b862ef.js.map": "/drone-game/static/js/main.f4b862ef.js.map"
   },
   "entrypoints": [
     "static/css/main.d63f8e89.css",
-    "static/js/main.0e39cd89.js"
+    "static/js/main.f4b862ef.js"
   ]
 }
