@@ -1,4 +1,3 @@
-import React from 'react';
 import { HorizontalSpeedometr } from './HorizontalSpeedometr';
 import { VerticalSpeedometr } from './VerticalSpeedometr';
 

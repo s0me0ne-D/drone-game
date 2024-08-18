@@ -1,4 +1,3 @@
-import React from 'react';
 import { useStore } from '../store/store';
 
 const lostMessage = 'The drone has been destroyed!';

@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { useStore } from '../store/store';
 import { fetchToken, initGame } from '../api/api';
 import { Scoreboard } from './Scoreboard';
@@ -16,7 +16,7 @@ export const StartGame = () => {
 	const [isError, setIsError] = useState<boolean>(false);
 
 	const handleOnSubmit = async (
-		event: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent<HTMLFormElement>
+		event: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.FormEvent<HTMLFormElement>
 	) => {
 		event.preventDefault();
 		if (name.length === 0) {

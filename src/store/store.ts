@@ -45,7 +45,6 @@ export const useStore = create<GameState>((set) => ({
 				{ playerName: state.playerName, complexity: state.complexity, score: state.score },
 			];
 			const sortedUpdatedSession = updatedSessions.sort((a, b) => b.score - a.score);
-			console.log(sortedUpdatedSession);
 			localStorage.setItem('gameSessions', JSON.stringify(sortedUpdatedSession));
 			return { gameSessions: sortedUpdatedSession };
 		});

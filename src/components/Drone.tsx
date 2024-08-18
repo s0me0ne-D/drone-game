@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { DronePosition } from '../interfaces/store_interfaces';
 import { useStore } from '../store/store';
 

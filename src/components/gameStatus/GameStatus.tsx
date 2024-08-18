@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useStore } from '../../store/store';
 import { CheckGameStatus } from './CheckGameStatus';
 
@@ -84,7 +84,6 @@ export const GameStatus = () => {
 		}
 	}, []);
 
-	console.log(droneWallsCoordinates);
 	if ((caveData.length, Math.ceil(caveWallsCoordinates.leftWall.length / 10))) {
 		return (
 			<CheckGameStatus

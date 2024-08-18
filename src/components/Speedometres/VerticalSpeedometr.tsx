@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactSpeedometer from 'react-d3-speedometer';
 import { useStore } from '../../store/store';
 
