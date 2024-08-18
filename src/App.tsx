@@ -1,4 +1,4 @@
-import './App.css';
+import './styles/main.css';
 import { Game } from './components/Game';
 import { StartGame } from './components/StartGame';
 import { useStore } from './store/store';

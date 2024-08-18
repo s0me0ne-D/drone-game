@@ -1,28 +1,36 @@
+import { CaveSegment } from '../interfaces';
 import { useStore } from '../store/store';
+
+const CAVE_WIDTH = 500;
+const CAVE_CENTER = 250;
+const SEGMENT_HEIGHT = 10;
+const CAVE_COLOR = 'grey';
 
 export const Cave = () => {
 	const caveData = useStore((state) => state.caveData);
 	const dronePosition = useStore((state) => state.dronePosition);
 
-	if (caveData.length > 0) {
-		return (
-			<g transform={`translate(0, ${dronePosition.y})`}>
-				<path
-					d={`M 0,0 
-${caveData.map((segment, index) => `L ${250 + segment.leftWall},${index * 10}`).join(' ')}
-L ${250 + caveData[caveData.length - 1].leftWall},${caveData.length * 10} 
-L 0,${caveData.length * 10} Z`}
-					fill='grey'
-				/>
-				<path
-					d={`M 500,0 
-${caveData.map((segment, index) => `L ${250 + segment.rightWall},${index * 10}`).join(' ')}
-L ${250 + caveData[caveData.length - 1].rightWall},${caveData.length * 10}
-L 500,${caveData.length * 10} Z`}
-					fill='grey'
-				/>
-			</g>
+	if (!caveData.length) return null;
+
+	const renderPath = (startX: number, wallKey: keyof CaveSegment): string => {
+		const pathSegments = caveData.map(
+			(segment, index) => `L ${CAVE_CENTER + segment[wallKey]},${index * SEGMENT_HEIGHT}`
 		);
-	}
-	return null;
+
+		const lastSegmentY = caveData.length * SEGMENT_HEIGHT;
+
+		return `
+      M ${startX},0 
+      ${pathSegments.join(' ')}
+      L ${CAVE_CENTER + caveData[caveData.length - 1][wallKey]},${lastSegmentY}
+      L ${startX},${lastSegmentY}
+      Z`;
+	};
+
+	return (
+		<g transform={`translate(0, ${dronePosition.y})`}>
+			<path d={renderPath(0, 'leftWall')} fill={CAVE_COLOR} />
+			<path d={renderPath(CAVE_WIDTH, 'rightWall')} fill={CAVE_COLOR} />
+		</g>
+	);
 };

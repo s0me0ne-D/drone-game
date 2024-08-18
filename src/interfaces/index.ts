@@ -1,3 +1,12 @@
+export interface WallsCoordinates {
+	leftWall: WallCoordinates[];
+	rightWall: WallCoordinates[];
+}
+export interface WallCoordinates {
+	x: number;
+	y: number;
+}
+
 export interface DronePosition {
 	x: number;
 	y: number;

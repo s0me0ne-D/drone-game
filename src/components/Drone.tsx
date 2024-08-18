@@ -1,28 +1,37 @@
 import { useEffect } from 'react';
-import { DronePosition } from '../interfaces/store_interfaces';
+import { DronePosition } from '../interfaces';
 import { useStore } from '../store/store';
+import { useShallow } from 'zustand/react/shallow';
+
+export const DRONE_SIZE = 10;
+export const MAX_SPEED_LIMIT = 10;
 
 export const Drone = () => {
-	const caveData = useStore((state) => state.caveData);
-	const dronePosition = useStore((state) => state.dronePosition);
-	const droneSpeed = useStore((state) => state.droneSpeed);
-	const setDroneSpeed = useStore((state) => state.setDroneSpeed);
-	const gameStatus = useStore((state) => state.gameStatus);
-
-	const setDronePosition = useStore((state) => state.setDronePosition);
+	const { caveData, dronePosition, droneSpeed, gameStatus, setDroneSpeed, setDronePosition } =
+		useStore(
+			useShallow((store) => ({
+				caveData: store.caveData,
+				dronePosition: store.dronePosition,
+				droneSpeed: store.droneSpeed,
+				gameStatus: store.gameStatus,
+				setDroneSpeed: store.setDroneSpeed,
+				setDronePosition: store.setDronePosition,
+			}))
+		);
 
 	useEffect(() => {
 		if (gameStatus === 'playing') {
 			const handleKeyDown = (e: KeyboardEvent) => {
-				const speedLimit = 10;
 				if (e.key === 'ArrowLeft') {
 					setDroneSpeed((prevSpeed) => {
-						const newHorizontalSpeed = prevSpeed.x > -speedLimit ? prevSpeed.x - 1 : prevSpeed.x;
+						const newHorizontalSpeed =
+							prevSpeed.x > -MAX_SPEED_LIMIT ? prevSpeed.x - 1 : prevSpeed.x;
 						return { ...prevSpeed, x: newHorizontalSpeed };
 					});
 				} else if (e.key === 'ArrowRight') {
 					setDroneSpeed((prevSpeed) => {
-						const newHorizontalSpeed = prevSpeed.x < speedLimit ? prevSpeed.x + 1 : prevSpeed.x;
+						const newHorizontalSpeed =
+							prevSpeed.x < MAX_SPEED_LIMIT ? prevSpeed.x + 1 : prevSpeed.x;
 						return { ...prevSpeed, x: newHorizontalSpeed };
 					});
 				} else if (e.key === 'ArrowUp') {
@@ -32,7 +41,7 @@ export const Drone = () => {
 					});
 				} else if (e.key === 'ArrowDown') {
 					setDroneSpeed((prevSpeed) => {
-						const newVerticalSpeed = prevSpeed.y > -speedLimit ? prevSpeed.y - 1 : prevSpeed.y;
+						const newVerticalSpeed = prevSpeed.y > -MAX_SPEED_LIMIT ? prevSpeed.y - 1 : prevSpeed.y;
 						return { ...prevSpeed, y: newVerticalSpeed };
 					});
 				}
@@ -64,11 +73,12 @@ export const Drone = () => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [droneSpeed, caveData, dronePosition]);
+
 	return (
 		<polygon
-			points={`${dronePosition.x - 10 / 2},${0} ${dronePosition.x + 10 / 2},${0} ${
+			points={`${dronePosition.x - DRONE_SIZE / 2},${0} ${dronePosition.x + DRONE_SIZE / 2},${0} ${
 				dronePosition.x
-			},${10}`}
+			},${DRONE_SIZE}`}
 			fill='blue'
 		/>
 	);

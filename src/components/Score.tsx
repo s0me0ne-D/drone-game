@@ -1,17 +1,20 @@
 import { useEffect } from 'react';
 import { useStore } from '../store/store';
+import { useShallow } from 'zustand/react/shallow';
 
 export const Score = () => {
-	const score = useStore((store) => store.score);
-	const dronePositionY = useStore((store) => store.dronePosition.y);
-	const complexity = useStore((store) => store.complexity);
-	const setScore = useStore((store) => store.setScore);
-	const droneSpeedY = useStore((store) => store.droneSpeed.y);
+	const { score, dronePositionY, complexity, setScore, droneSpeedY } = useStore(
+		useShallow((store) => ({
+			score: store.score,
+			dronePositionY: store.dronePosition.y,
+			complexity: store.complexity,
+			setScore: store.setScore,
+			droneSpeedY: store.droneSpeed.y,
+		}))
+	);
 
 	useEffect(() => {
-		if (dronePositionY !== 0) {
-			setScore(complexity + -droneSpeedY);
-		}
+		if (dronePositionY !== 0) setScore(complexity + -droneSpeedY);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dronePositionY]);
 

@@ -1,44 +1,48 @@
 import { useEffect } from 'react';
-import { WallCoordinates, WallsCoordinates } from './GameStatus';
+import { WallCoordinates, WallsCoordinates } from '../../interfaces/index';
 import { useStore } from '../../store/store';
+import { useShallow } from 'zustand/react/shallow';
+import { DRONE_SIZE } from '../Drone';
 
 interface CheckColissionProps {
 	droneWallsCoordinates: WallCoordinates[];
 	caveWallsCoordinates: WallsCoordinates;
 }
 
-const droneSize = 10;
-
 export const CheckGameStatus = ({
 	droneWallsCoordinates,
 	caveWallsCoordinates,
 }: CheckColissionProps) => {
-	const dronePosition = useStore((store) => store.dronePosition);
-	const setGameStatus = useStore((store) => store.setGameStatus);
+	const { dronePosition, setGameStatus } = useStore(
+		useShallow((store) => ({
+			dronePosition: store.dronePosition,
+			setGameStatus: store.setGameStatus,
+		}))
+	);
 
-	useEffect(() => {
-		const checkCollision = () => {
-			for (let i = 0; i <= droneSize; i++) {
-				const indexOfWallSection = -dronePosition.y + i;
-				const leftDroneCoordinates = dronePosition.x - droneWallsCoordinates[i].x;
-				const rightDroneCoordinates = dronePosition.x + droneWallsCoordinates[i].x;
-				if (caveWallsCoordinates.leftWall[indexOfWallSection]) {
-					if (
-						leftDroneCoordinates <= caveWallsCoordinates.leftWall[indexOfWallSection].x ||
-						caveWallsCoordinates.rightWall[indexOfWallSection].x <= rightDroneCoordinates
-					) {
-						setGameStatus('lost');
-					}
+	const checkCollision = () => {
+		for (let i = 0; i <= DRONE_SIZE; i++) {
+			const indexOfWallSection = -dronePosition.y + i;
+			const leftDroneCoordinates = dronePosition.x - droneWallsCoordinates[i].x;
+			const rightDroneCoordinates = dronePosition.x + droneWallsCoordinates[i].x;
+			if (caveWallsCoordinates.leftWall[indexOfWallSection]) {
+				if (
+					leftDroneCoordinates <= caveWallsCoordinates.leftWall[indexOfWallSection].x ||
+					caveWallsCoordinates.rightWall[indexOfWallSection].x <= rightDroneCoordinates
+				) {
+					setGameStatus('lost');
 				}
 			}
-		};
+		}
+	};
 
-		const checkIsWin = () => {
-			if (-dronePosition.y >= caveWallsCoordinates.leftWall.length) {
-				setGameStatus('won');
-			}
-		};
+	const checkIsWin = () => {
+		if (-dronePosition.y >= caveWallsCoordinates.leftWall.length) {
+			setGameStatus('won');
+		}
+	};
 
+	useEffect(() => {
 		checkCollision();
 		checkIsWin();
 		// eslint-disable-next-line react-hooks/exhaustive-deps

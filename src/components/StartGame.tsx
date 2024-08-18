@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useStore } from '../store/store';
 import { fetchToken, initGame } from '../api/api';
 import { Scoreboard } from './Scoreboard';
+import { useShallow } from 'zustand/react/shallow';
 
 export const StartGame = () => {
-	const setPlayerName = useStore((state) => state.setPlayerName);
-	const setComplexity = useStore((state) => state.setComplexity);
-	const setPlayerId = useStore((state) => state.setPlayerId);
-	const setToken = useStore((state) => state.setToken);
-	const setGameStatus = useStore((state) => state.setGameStatus);
+	const { setPlayerName, setComplexity, setPlayerId, setToken, setGameStatus } = useStore(
+		useShallow((store) => ({
+			setPlayerName: store.setPlayerName,
+			setComplexity: store.setComplexity,
+			setPlayerId: store.setPlayerId,
+			setToken: store.setToken,
+			setGameStatus: store.setGameStatus,
+		}))
+	);
 
 	const [name, setName] = useState<string>('');
 	const [complexity, setComplexityLevel] = useState<number>(0);
@@ -37,6 +42,18 @@ export const StartGame = () => {
 		}
 	};
 
+	const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+		event.target.value.length !== 0 && setIsError(false);
+		setName(event.target.value);
+	};
+
+	const handleLevelChange = (event: ChangeEvent<HTMLInputElement>) => {
+		if (+event.target.value < 0 || +event.target.value > 10) {
+			return;
+		} else {
+			setComplexityLevel(+event.target.value);
+		}
+	};
 	return (
 		<div className='start-game'>
 			<form onSubmit={handleOnSubmit}>
@@ -47,10 +64,7 @@ export const StartGame = () => {
 						type='text'
 						placeholder='Enter your name'
 						value={name}
-						onChange={(e) => {
-							e.target.value.length !== 0 && setIsError(false);
-							setName(e.target.value);
-						}}
+						onChange={handleNameChange}
 					/>
 					<input
 						className='level'
@@ -59,13 +73,7 @@ export const StartGame = () => {
 						max='10'
 						placeholder='Difficulty Level'
 						value={complexity}
-						onChange={(e) => {
-							if (+e.target.value < 0 || +e.target.value > 10) {
-								return;
-							} else {
-								setComplexityLevel(+e.target.value);
-							}
-						}}
+						onChange={handleLevelChange}
 					/>
 				</div>
 				<button className='button' onClick={handleOnSubmit} type='submit'>

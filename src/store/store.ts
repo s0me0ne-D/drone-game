@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { CaveSegment, GameSession, GameState } from '../interfaces/store_interfaces';
+import { CaveSegment, GameSession, GameState } from '../interfaces';
 
 export const useStore = create<GameState>((set) => ({
 	playerName: '',
