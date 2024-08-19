@@ -39,14 +39,14 @@ export const Drone = () => {
 						break;
 					case 'ArrowUp':
 						setDroneSpeed((prevSpeed) => {
-							const newVerticalSpeed = prevSpeed.y < 0 ? prevSpeed.y + 1 : 0;
+							const newVerticalSpeed = prevSpeed.y > 0 ? prevSpeed.y - 1 : 0;
 							return { ...prevSpeed, y: newVerticalSpeed };
 						});
 						break;
 					case 'ArrowDown':
 						setDroneSpeed((prevSpeed) => {
 							const newVerticalSpeed =
-								prevSpeed.y > -MAX_SPEED_LIMIT ? prevSpeed.y - 1 : prevSpeed.y;
+								prevSpeed.y < MAX_SPEED_LIMIT ? prevSpeed.y + 1 : prevSpeed.y;
 							return { ...prevSpeed, y: newVerticalSpeed };
 						});
 						break;

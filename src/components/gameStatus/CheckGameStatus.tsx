@@ -13,7 +13,6 @@ export const CheckGameStatus = ({
 	droneWallsCoordinates,
 	caveWallsCoordinates,
 }: CheckColissionProps) => {
-	
 	const { dronePosition, setGameStatus } = useStore(
 		useShallow((store) => ({
 			dronePosition: store.dronePosition,
@@ -23,7 +22,7 @@ export const CheckGameStatus = ({
 
 	const checkCollision = () => {
 		for (let i = 0; i <= DRONE_SIZE; i++) {
-			const indexOfWallSection = -dronePosition.y + i;
+			const indexOfWallSection = dronePosition.y + i;
 			const leftDroneCoordinates = dronePosition.x - droneWallsCoordinates[i].x;
 			const rightDroneCoordinates = dronePosition.x + droneWallsCoordinates[i].x;
 			if (caveWallsCoordinates.leftWall[indexOfWallSection]) {
@@ -38,7 +37,7 @@ export const CheckGameStatus = ({
 	};
 
 	const checkIsWin = () => {
-		if (-dronePosition.y >= caveWallsCoordinates.leftWall.length) {
+		if (dronePosition.y >= 20) {
 			setGameStatus('won');
 		}
 	};

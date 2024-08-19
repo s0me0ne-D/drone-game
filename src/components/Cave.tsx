@@ -28,7 +28,7 @@ export const Cave = () => {
 	};
 
 	return (
-		<g transform={`translate(0, ${dronePosition.y})`}>
+		<g transform={`translate(0, ${-dronePosition.y})`}>
 			<path d={renderPath(0, 'leftWall')} fill={CAVE_COLOR} />
 			<path d={renderPath(CAVE_WIDTH, 'rightWall')} fill={CAVE_COLOR} />
 		</g>

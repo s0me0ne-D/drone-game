@@ -7,7 +7,7 @@ export const VerticalSpeedometr = () => {
 	return (
 		<div>
 			<h2>Vertical</h2>
-			<ReactSpeedometer height={130} width={200} maxValue={MAX_SPEED_LIMIT} value={-droneSpeedY} />
+			<ReactSpeedometer height={130} width={200} maxValue={MAX_SPEED_LIMIT} value={droneSpeedY} />
 		</div>
 	);
 };

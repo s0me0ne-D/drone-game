@@ -12,9 +12,8 @@ export const Score = () => {
 			droneSpeedY: store.droneSpeed.y,
 		}))
 	);
-
 	useEffect(() => {
-		if (dronePositionY !== 0) setScore(complexity + -droneSpeedY);
+		if (dronePositionY !== 0) setScore(complexity + droneSpeedY);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dronePositionY]);
 
