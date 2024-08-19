@@ -26,7 +26,7 @@ export const PopUp = () => {
 			<div className='container'>
 				<h2>{popUpMessage}</h2>
 				<button className='button' onClick={handleOnClick}>
-					Back to start
+					Start new game
 				</button>
 			</div>
 		</div>
