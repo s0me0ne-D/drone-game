@@ -13,6 +13,7 @@ export const CheckGameStatus = ({
 	droneWallsCoordinates,
 	caveWallsCoordinates,
 }: CheckColissionProps) => {
+	
 	const { dronePosition, setGameStatus } = useStore(
 		useShallow((store) => ({
 			dronePosition: store.dronePosition,
