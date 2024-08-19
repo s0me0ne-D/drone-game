@@ -37,7 +37,7 @@ export const CheckGameStatus = ({
 	};
 
 	const checkIsWin = () => {
-		if (dronePosition.y >= 20) {
+		if (dronePosition.y >= caveWallsCoordinates.leftWall.length) {
 			setGameStatus('won');
 		}
 	};
